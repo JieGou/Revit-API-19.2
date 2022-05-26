@@ -48,7 +48,7 @@ namespace Utility
                 return Model.Entity.ElementType.Duct;
             if (revitElem is Autodesk.Revit.DB.Plumbing.Pipe)
                 return Model.Entity.ElementType.Pipe;
-            if (revitElem is Autodesk.Revit.DB.Electrical.CableTray)
+            if (revitElem is CableTray)
                 return Model.Entity.ElementType.CableTray;
             return Model.Entity.ElementType.Equipment;
         }
@@ -74,12 +74,12 @@ namespace Utility
         }
 
         // Check MEP Entity Element with MEP Revit Doc
-        public static bool IsEqual(this Model.Entity.Element entElement, Autodesk.Revit.DB.Element revitElement)
+        public static bool IsEqual(this Model.Entity.Element entElement, Element revitElement)
         {
             return entElement.RevitElement.Id == revitElement.Id;
         }
         // Check List<> Revit Element with Mep Entity Element
-        public static bool Contains(this IEnumerable<Autodesk.Revit.DB.Element> elements, Model.Entity.Element entElement)
+        public static bool Contains(this IEnumerable<Element> elements, Model.Entity.Element entElement)
         {
             return elements.Any(x => entElement.IsEqual(x));
         }
@@ -90,7 +90,7 @@ namespace Utility
             return mepData.MEPElements.Select(x => new Model.Entity.Element { RevitElement = x }).ToList();
         }
 
-        public static IEnumerable<Autodesk.Revit.DB.Element> GetIntersectElements(this Autodesk.Revit.DB.Element elem)
+        public static IEnumerable<Element> GetIntersectElements(this Element elem)
         {
             var instances = MEPData.Instance.MEPElements;
             var mepElements = instances.Where(x => x.Id != elem.Id);
@@ -127,7 +127,7 @@ namespace Utility
             var intersectElements = mepCollector.WherePasses(eisFilter);
             return intersectElements;
         }
-        private static IEnumerable<Autodesk.Revit.DB.Element> GetEquipmentIntersectElement(this Autodesk.Revit.DB.Element elem)
+        private static IEnumerable<Element> GetEquipmentIntersectElement(this Element elem)
         {
             var instances = MEPData.Instance.MechEquipments;
             var equipElements = instances.Where(x => x.Id != elem.Id);
@@ -139,7 +139,7 @@ namespace Utility
             var equipIntersectElements = equipCollector.WherePasses(eisEquipFilter);
             return equipIntersectElements;
         }
-        private static IEnumerable<Autodesk.Revit.DB.MEPCurve> GetPipeIntersecElements(this Autodesk.Revit.DB.Element elem)
+        private static IEnumerable<MEPCurve> GetPipeIntersecElements(this Element elem)
         {
             var instances = MEPData.Instance.MepPipes;
             var pipeElements = instances.Where(x => x.Id != elem.Id);
@@ -152,7 +152,7 @@ namespace Utility
             var pipeIntersectElements = pipeCollector.WherePasses(eisPipeFilter).Cast<MEPCurve>();
             return pipeIntersectElements;
         }
-        private static IEnumerable<Autodesk.Revit.DB.MEPCurve> GetDuctIntersecElements(this Autodesk.Revit.DB.Element elem)
+        private static IEnumerable<MEPCurve> GetDuctIntersecElements(this Element elem)
         {
             var instances = MEPData.Instance.MepDucts;
             var ductElements = instances.Where(x => x.Id != elem.Id);
@@ -165,7 +165,7 @@ namespace Utility
             var ductIntersectElements = ductCollector.WherePasses(eisDuctFilter).Cast<MEPCurve>();
             return ductIntersectElements;
         }
-        private static IEnumerable<Autodesk.Revit.DB.Electrical.CableTray> GetCableTrayIntersecElements(this Autodesk.Revit.DB.Element elem)
+        private static IEnumerable<CableTray> GetCableTrayIntersecElements(this Element elem)
         {
             var instances = MEPData.Instance.CableTrays;
             var trayElements = instances.Where(x => x.Id != elem.Id);

@@ -8,7 +8,7 @@ namespace Model.ViewModel
 {
     public class ElementView
     {
-        public Model.Entity.Element Element { get; set; }
+        public Entity.Element Element { get; set; }
         public bool VisibleBySearch { get; set; }
     }
 }

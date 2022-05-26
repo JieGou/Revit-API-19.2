@@ -17,12 +17,12 @@ namespace Utility
                 return RevitData.Instance;
             }
         }
-        public static double GetBoundingBox(this Autodesk.Revit.DB.Element elem)
+        public static double GetBoundingBox(this Element elem)
         {
             var bb = elem.get_BoundingBox(null);
             return bb.Max.Z - bb.Min.Z;
         }
-        public static BoundingBoxIntersectsFilter GetBoundingBoxIntersectsFilter(this Autodesk.Revit.DB.Element elem)
+        public static BoundingBoxIntersectsFilter GetBoundingBoxIntersectsFilter(this Element elem)
         {
             var bb = elem.get_BoundingBox(null);
             Outline outLine = new Outline(bb.Min, bb.Max);

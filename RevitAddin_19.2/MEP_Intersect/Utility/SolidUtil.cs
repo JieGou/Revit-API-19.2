@@ -10,12 +10,12 @@ namespace Utility
 {
     public static class SolidUtil
     {
-        public static double GetProximityHeight(this Autodesk.Revit.DB.Element elem)
+        public static double GetProximityHeight(this Element elem)
         {
             var bb = elem.get_BoundingBox(null);
             return bb.Max.Z - bb.Min.Z;
         }
-        public static Autodesk.Revit.DB.Solid MoveToOrigin(this Autodesk.Revit.DB.Solid solid)
+        public static Solid MoveToOrigin(this Solid solid)
         {
             var bb = solid.GetBoundingBox();
             var tf = bb.Transform;
@@ -23,23 +23,23 @@ namespace Utility
             var translationTf = Autodesk.Revit.DB.Transform.CreateTranslation(-origin);
             return Autodesk.Revit.DB.SolidUtils.CreateTransformed(solid, translationTf);
         }
-        public static Autodesk.Revit.DB.Solid GetSingleSolid(this Autodesk.Revit.DB.Element element)
+        public static Solid GetSingleSolid(this Element element)
         {
-            var geoElem = element.get_Geometry(new Autodesk.Revit.DB.Options());
+            var geoElem = element.get_Geometry(new Options());
             return geoElem.GetSingleSolid();
         }
-        public static Autodesk.Revit.DB.Solid GetSingleSolid(this IEnumerable<Autodesk.Revit.DB.GeometryObject> geoObjs)
+        public static Solid GetSingleSolid(this IEnumerable<GeometryObject> geoObjs)
         {
-            foreach (Autodesk.Revit.DB.GeometryObject geoObj in geoObjs)
+            foreach (GeometryObject geoObj in geoObjs)
             {
-                if(geoObj is Autodesk.Revit.DB.GeometryInstance)
+                if(geoObj is GeometryInstance)
                 {
-                    var s = (geoObj as Autodesk.Revit.DB.GeometryInstance).GetSingleSolid();
+                    var s = (geoObj as GeometryInstance).GetSingleSolid();
                     if (s != null) return s;
                 }
-                if(geoObj is Autodesk.Revit.DB.Solid)
+                if(geoObj is Solid)
                 {
-                    var solid = geoObj as Autodesk.Revit.DB.Solid;
+                    var solid = geoObj as Solid;
                     if(solid != null && solid.Faces.Size != 0 && solid.Edges.Size != 0)
                     {
                         return solid;
@@ -48,39 +48,39 @@ namespace Utility
             }
             return null;
         }
-        public static Autodesk.Revit.DB.Solid GetSingleSolid(this Autodesk.Revit.DB.GeometryInstance geoIns)
+        public static Solid GetSingleSolid(this GeometryInstance geoIns)
         {
             return GetSingleSolid(geoIns.GetInstanceGeometry());
         }
-        public static Autodesk.Revit.DB.Solid GetOrigin(this Autodesk.Revit.DB.Element element)
+        public static Solid GetOrigin(this Element element)
         {
-            if(element is Autodesk.Revit.DB.FamilyInstance)
+            if(element is FamilyInstance)
             {
-                var fi = element as Autodesk.Revit.DB.FamilyInstance;
-                var orgGeoElem = fi.GetOriginalGeometry(new Autodesk.Revit.DB.Options());
+                var fi = element as FamilyInstance;
+                var orgGeoElem = fi.GetOriginalGeometry(new Options());
                 var solid = GetSingleSolid(orgGeoElem);
                 var fiTrf = fi.GetTransform();
                 return Autodesk.Revit.DB.SolidUtils.CreateTransformed(solid, fiTrf);
             }
-            if(element is Autodesk.Revit.DB.Floor)
+            if(element is Floor)
             {
-                var floor = element as Autodesk.Revit.DB.Floor;
+                var floor = element as Floor;
                 var bottomRf = Autodesk.Revit.DB.HostObjectUtils.GetBottomFaces(floor).First();
-                var bottomFace = element.GetGeometryObjectFromReference(bottomRf) as Autodesk.Revit.DB.PlanarFace;
+                var bottomFace = element.GetGeometryObjectFromReference(bottomRf) as PlanarFace;
                 return Autodesk.Revit.DB.GeometryCreationUtilities.CreateExtrusionGeometry(bottomFace.GetEdgesAsCurveLoops(),
                                                                   -bottomFace.FaceNormal, floor.GetProximityHeight());
             }
-            if(element is Autodesk.Revit.DB.Wall)
+            if(element is Wall)
             {
-                var wall = element as Autodesk.Revit.DB.Wall;
+                var wall = element as Wall;
                 var sideRf = Autodesk.Revit.DB.HostObjectUtils.GetSideFaces(wall,Autodesk.Revit.DB.ShellLayerType.Exterior).First();
-                var sideFace = element.GetGeometryObjectFromReference(sideRf) as Autodesk.Revit.DB.PlanarFace;
+                var sideFace = element.GetGeometryObjectFromReference(sideRf) as PlanarFace;
                 return Autodesk.Revit.DB.GeometryCreationUtilities.CreateExtrusionGeometry(sideFace.GetEdgesAsCurveLoops(),
                                                                    -sideFace.FaceNormal, wall.Width);
             }
             throw new Exception();
         }
-        public static Autodesk.Revit.DB.Solid Scale(this Autodesk.Revit.DB.Solid solid, double factor)
+        public static Solid Scale(this Solid solid, double factor)
         {
             var centerPoint = solid.ComputeCentroid();
             var tf = Autodesk.Revit.DB.Transform.Identity.ScaleBasis(factor);
@@ -91,7 +91,7 @@ namespace Utility
 
             return Autodesk.Revit.DB.SolidUtils.CreateTransformed(scaleSolid, translateTf);
         }
-        public static Autodesk.Revit.DB.Solid Merge(this IEnumerable<Autodesk.Revit.DB.Solid> solids)
+        public static Solid Merge(this IEnumerable<Solid> solids)
         {
             var mergeSolid = solids.First();
             foreach (var solid in solids)
@@ -102,16 +102,16 @@ namespace Utility
             }
             return mergeSolid;
         }
-        public static Autodesk.Revit.DB.Solid Difference(this Autodesk.Revit.DB.Solid targetSolid, IEnumerable<Autodesk.Revit.DB.Solid> otherSolid)
+        public static Solid Difference(this Solid targetSolid, IEnumerable<Solid> otherSolid)
         {
             var mergeOtherSolid = otherSolid.Merge();
             var mergeAllSolid = BooleanOperationsUtils.ExecuteBooleanOperation(mergeOtherSolid, targetSolid, BooleanOperationsType.Union);
             return BooleanOperationsUtils.ExecuteBooleanOperation(mergeAllSolid, mergeOtherSolid, BooleanOperationsType.Difference);
         }
-        public static Autodesk.Revit.DB.BoundingBoxXYZ ScaleBoundingBox(Autodesk.Revit.DB.BoundingBoxXYZ bb, double a)
+        public static BoundingBoxXYZ ScaleBoundingBox(BoundingBoxXYZ bb, double a)
         {
             var min = bb.Min; var max = bb.Max; var origin = (min + max) / 2;
-            return new Autodesk.Revit.DB.BoundingBoxXYZ
+            return new BoundingBoxXYZ
             { Min = origin + (min - origin) * a, Max = origin + (max - origin) * a };
         }
     }

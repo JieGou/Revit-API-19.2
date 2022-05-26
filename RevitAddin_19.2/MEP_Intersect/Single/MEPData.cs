@@ -43,8 +43,8 @@ namespace SingleData
         }
 
         // Sửa lại thuật toán để lấy ra các đối tượng MEPElement định nghĩa các đối tượng MEP nói chung
-        private IEnumerable<Autodesk.Revit.DB.Element> mepElements;
-        public IEnumerable<Autodesk.Revit.DB.Element> MEPElements
+        private IEnumerable<Element> mepElements;
+        public IEnumerable<Element> MEPElements
         {
             get
             {
@@ -63,8 +63,8 @@ namespace SingleData
 
         // Nên truy xuất thêm đối tượng MEPCurve là đối tượng để truy xuất các đối tượng khác liên quan
         // MEPCurve -> Pipe, PipeInsulation - Duct, DuctInsulation
-        private IEnumerable<Autodesk.Revit.DB.MEPCurve> mepCurves;
-        public IEnumerable<Autodesk.Revit.DB.MEPCurve> MEPCurves
+        private IEnumerable<MEPCurve> mepCurves;
+        public IEnumerable<MEPCurve> MEPCurves
         {
             get
             {
@@ -81,8 +81,8 @@ namespace SingleData
             }
         }
 
-        private IEnumerable<Autodesk.Revit.DB.MEPCurve> mepPipes;
-        public virtual IEnumerable<Autodesk.Revit.DB.MEPCurve> MepPipes
+        private IEnumerable<MEPCurve> mepPipes;
+        public virtual IEnumerable<MEPCurve> MepPipes
         {
             get
             {
@@ -109,8 +109,8 @@ namespace SingleData
             }
         }
 
-        private IEnumerable<Autodesk.Revit.DB.MEPCurve> mepDucts;
-        public virtual IEnumerable<Autodesk.Revit.DB.MEPCurve> MepDucts
+        private IEnumerable<MEPCurve> mepDucts;
+        public virtual IEnumerable<MEPCurve> MepDucts
         {
             get
             {
@@ -137,8 +137,8 @@ namespace SingleData
             }
         }
 
-        private IEnumerable<Autodesk.Revit.DB.Electrical.CableTray> cableTrays;
-        public virtual IEnumerable<Autodesk.Revit.DB.Electrical.CableTray> CableTrays
+        private IEnumerable<CableTray> cableTrays;
+        public virtual IEnumerable<CableTray> CableTrays
         {
             get
             {
