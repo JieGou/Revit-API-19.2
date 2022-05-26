@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-<<<<<<< HEAD
 using SingleData;
 using Utility;
-=======
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.UI.Selection;
 using Utility;
@@ -16,7 +14,6 @@ using SingleData;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Electrical;
->>>>>>> a83d5df3a889ba4aaee4e9fa82b4f67c346ff260
 
 namespace SingleData
 {
@@ -25,7 +22,6 @@ namespace SingleData
         private static ModelData instance;
         public static ModelData Instance
         {
-<<<<<<< HEAD
             get { if (instance == null) instance = new ModelData(); return instance; }
             set { instance = value; }
         }
@@ -80,37 +76,10 @@ namespace SingleData
             get
             {
                 if (pipeEntityElements == null) MEPUtil.GetPipeEntityElement();
-=======
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new ModelData();
-                }
-                return instance;
-            }
-            set
-            {
-                instance = value;
-            }
-        }
-
-        // Tạo các tập hợp chứ các EntityElement để quản lý
-        private List<Model.Entity.Element> mepEntityElements;
-        public List<Model.Entity.Element> MEPEntityElements
-        {
-            get
-            {
-                if (mepEntityElements == null)
-                {
-                    mepEntityElements = MEPUtil.GetMEPEntityElements();
-                }
->>>>>>> a83d5df3a889ba4aaee4e9fa82b4f67c346ff260
                 return mepEntityElements;
             }
             set
             {
-<<<<<<< HEAD
                 pipeEntityElements = value;
             }
         }
@@ -140,9 +109,6 @@ namespace SingleData
             set
             {
                 cableTrayEntityElements = value;
-=======
-                mepEntityElements = value;
->>>>>>> a83d5df3a889ba4aaee4e9fa82b4f67c346ff260
             }
         }
     }

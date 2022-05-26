@@ -41,9 +41,11 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="RevitAPI">
       <HintPath>..\..\DLL\RevitAPI.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="RevitAPIUI">
       <HintPath>..\..\DLL\RevitAPIUI.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="RevitData">
       <HintPath>..\..\DLL\RevitData.dll</HintPath>

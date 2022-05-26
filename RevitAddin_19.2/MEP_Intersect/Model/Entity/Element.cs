@@ -10,7 +10,6 @@ namespace Model.Entity
     public class Element
     {
         public Autodesk.Revit.DB.Element RevitElement { get; set; }
-<<<<<<< HEAD
         //public Autodesk.Revit.DB.MEPCurve RevitMEPCurve { get; set; }
 
         private ElementType? elementType;
@@ -34,9 +33,7 @@ namespace Model.Entity
                 return identify;
             }
         }
-=======
 
->>>>>>> a83d5df3a889ba4aaee4e9fa82b4f67c346ff260
 
         private IEnumerable<Element> instersectElements;
         public IEnumerable<Element> InstersectElements
@@ -47,7 +44,6 @@ namespace Model.Entity
                 return instersectElements;
             }
         }
-<<<<<<< HEAD
 
         private IEnumerable<Autodesk.Revit.DB.MEPCurve> pipeInstersectElements;
         public IEnumerable<Autodesk.Revit.DB.MEPCurve> PipeInstersectElements
@@ -78,7 +74,5 @@ namespace Model.Entity
                 return cableTrayIntersectElements;
             }
         }
-=======
->>>>>>> a83d5df3a889ba4aaee4e9fa82b4f67c346ff260
     }
 }
