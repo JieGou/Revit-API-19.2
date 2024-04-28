@@ -7,10 +7,8 @@ using SingleData;
 using Utility;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.UI.Selection;
-using Utility;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using SingleData;
 using Autodesk.Revit.DB.Plumbing;
 using Autodesk.Revit.DB.Mechanical;
 using Autodesk.Revit.DB.Electrical;
@@ -20,6 +18,7 @@ namespace SingleData
     public class ModelData
     {
         private static ModelData instance;
+
         public static ModelData Instance
         {
             get { if (instance == null) instance = new ModelData(); return instance; }
@@ -27,6 +26,7 @@ namespace SingleData
         }
 
         private List<Model.Entity.ElementType> elementTypes;
+
         public List<Model.Entity.ElementType> ElementTypes
         {
             get
@@ -46,6 +46,7 @@ namespace SingleData
         }
 
         private List<Model.Entity.Element> mepEntityElements;
+
         public List<Model.Entity.Element> MEPEntityElements
         {
             get
@@ -60,6 +61,7 @@ namespace SingleData
         }
 
         private List<Model.Entity.Element> equipEntityElements;
+
         public List<Model.Entity.Element> EquipEntityElements
         {
             get
@@ -71,6 +73,7 @@ namespace SingleData
         }
 
         private List<Model.Entity.Element> pipeEntityElements;
+
         public List<Model.Entity.Element> PipeEntityElements
         {
             get
@@ -85,6 +88,7 @@ namespace SingleData
         }
 
         private List<Model.Entity.Element> ductEntityElements;
+
         public List<Model.Entity.Element> DuctEntityElements
         {
             get
@@ -99,6 +103,7 @@ namespace SingleData
         }
 
         private List<Model.Entity.Element> cableTrayEntityElements;
+
         public List<Model.Entity.Element> CableTrayEntityElements
         {
             get
